@@ -12,22 +12,24 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y \
     vim \
     curl \
     git \
+    # Python dependencies
     python3.6 \
     python3-pip \
     python3-setuptools \
-    python3-dev \
+    python3-ipython \
     python3-pyside \
     python3-pyqt5 \
     python3-pyqt4 \
-    python3-ipython \
+    python-ipython \
     python-pyside \
     python-pyqt5 \
-    python-surfer \
-    python-sip \
-    python-ipython \
+    python-qt4 \
     python-matplotlib \
+    python-numpy \
+    python-scipy \
+    python-surfer \
     ipython \
-    mesa-utils \
+    # Anaconda dependencies
     libgl1-mesa-glx \
     libegl1-mesa \
     libxrandr2 \
@@ -37,6 +39,9 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y \
     libasound2 \
     libxi6 \
     libxtst6 \
+    # Other graphical libraries depedencies
+    mesa-utils \
+    libglu1-mesa \
     libsm6 \
     vtk6
 
@@ -48,28 +53,30 @@ WORKDIR /home/$USER
 RUN printf '\nexport FREESURFER_HOME=/usr/local/freesurfer\n\
 source $FREESURFER_HOME/SetUpFreeSurfer.sh\n' >> .bashrc
 
-# Use X Window System display on the Docker host
+# Use the X Window System display on the Docker host
 ENV DISPLAY=host.docker.internal:0
 
-# Install Anaconda and set up Python 3 environment
+# Install Anaconda
 RUN curl -sSL -O "https://repo.anaconda.com/archive/Anaconda2-2019.03-Linux-x86_64.sh" \
     && bash Anaconda2-2019.03-Linux-x86_64.sh -b -p /home/$USER/anaconda2 \
     && rm Anaconda2-2019.03-Linux-x86_64.sh
 RUN /home/$USER/anaconda2/condabin/conda init \
     && /home/$USER/anaconda2/condabin/conda update -y -n base -c defaults conda
-# Anaconda already comes with numpy, scipy, matplotlib, ipython, etc.
-RUN /home/$USER/anaconda2/condabin/conda install -y --channel conda-forge \
+
+# Install packages in the Anaconda Python 2.7 environment
+# (it already comes with numpy, scipy, matplotlib, ipython, etc.)
+RUN /home/$USER/anaconda2/condabin/conda install -y \
     pyqt=4 \
     pyside \
     vtk \
-    nipype \
     mayavi \
-    pysurfer \
     six \
     boto3 \
-    traitsui \
-    pysftp \
-    webcolors
+    traitsui
+RUN /home/$USER/anaconda2/condabin/conda install -y --channel conda-forge \
+    nipype \
+    pysurfer
+
 # Create Python 3 environment
 RUN /home/$USER/anaconda2/condabin/conda create -y -n py3 python=3.7
 
