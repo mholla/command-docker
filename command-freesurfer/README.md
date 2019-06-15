@@ -1,5 +1,9 @@
 # CoMMaND Lab's FreeSurfer development environment
 
+This is for Mac only.  Linux users may be able to adapt this with some changes in X-forwarding; YMMV.
+
+Pysurfer and Mayavi currently work for Python 2 only.  The base Conda environment in the image is Python 2.7.
+
 ## Prerequisites
 
  - [Homebrew](https://brew.sh/)
@@ -18,7 +22,7 @@
    ~~~~~~~~ bash
    ./build.sh
    ~~~~~~~~
-   You will be prompted to optionally customize your username and license file location.
+   You will be prompted to optionally customize your username and license file location.  
 
 3. Enable forwarding X server connections to the XQuartz display (from Docker containers to the host Mac OS X):
    ~~~~~~~~ bash
@@ -28,6 +32,6 @@
 
 4. Start a new Docker container based on the `command-freesurfer` image:
    ~~~~~~~~ bash
-   docker run -it --rm command-freesurfer
+   docker run -it command-freesurfer -v /local/directory/:/container/directory
    ~~~~~~~~
-   Note that the `--rm` option will cause the Docker container to be deleted on exit. For other run options, see documentation on `docker run` and `docker exec`.
+   This will mount a local drive to the container so that its contents are available.  For other run options, see documentation on `docker run` and `docker exec`.
