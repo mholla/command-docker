@@ -16,11 +16,12 @@ echo -n "Enter username [$USER]: ";
 read INPUT;
 USER=${INPUT:-$USER};
 
+# Script arguments are passed to the docker build command; e.g., --no-cache
 echo "Building Docker image..." \
-    && docker build \
+    && docker build --no-cache \
     --build-arg LICENSE_FILE=$LICENSE_FILE \
     --build-arg USER=$USER \
-    --tag=command-freesurfer $DIR \
+    --tag=command-freesurfer $@ $DIR \
     && echo "Docker image successfully built!" \
     && echo "You can now run a container with, for example: "\
     && echo "	docker run -it --rm command-freesurfer";

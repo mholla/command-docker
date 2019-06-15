@@ -8,6 +8,7 @@ echo "done"
 
 echo "Allowing X server connections from current IP address: "
 xhost +$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
+pkill -i xquartz
 echo "... done"
 
 echo "Forwarding X Window System connections to display: "
