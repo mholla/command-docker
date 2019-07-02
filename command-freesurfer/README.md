@@ -1,8 +1,8 @@
 # CoMMaND Lab's FreeSurfer development environment
 
-This is for Mac only.  Linux users may be able to adapt this with some changes in X-forwarding; YMMV.
+Allows for Python scripting of [Freesurfer](https://surfer.nmr.mgh.harvard.edu/) commands.  Much of this was previously possible using [NiBabel](https://nipy.org/nibabel/) and [Nipype](https://nipype.readthedocs.io/en/latest/) through [neurodocker](https://github.com/kaczmarj/neurodocker), but it does not allow for graphical user interfaces.  This docker image makes it possible to script [Pysurfer](http://pysurfer.github.io/) commands to capture images as well.  
 
-Pysurfer and Mayavi currently work for Python 2 only.  The base Conda environment in the image is Python 2.7.
+Notes: This is for Mac only.  Linux users may be able to adapt this with some changes in X-forwarding; YMMV.  The base Conda environment in the image is Python 2.7 because [Pysurfer](http://pysurfer.github.io/) and [Mayavi](https://github.com/enthought/mayavi) currently work for Python 2 only.  
 
 ## Prerequisites
 
