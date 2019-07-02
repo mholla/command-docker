@@ -35,3 +35,5 @@ Notes: This is for Mac only.  Linux users may be able to adapt this with some ch
    docker run -it command-freesurfer -v /local/directory/:/container/directory
    ~~~~~~~~
    This will mount a local drive to the container so that its contents are available.  For other run options, see documentation on `docker run` and `docker exec`.
+
+5. The file `pysurfer_test.py` can be copied into the Docker image and run to confirm that Freesurfer and Pysurfer are working properly.
