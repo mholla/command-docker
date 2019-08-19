@@ -18,7 +18,7 @@ USER=${INPUT:-$USER};
 
 # Script arguments are passed to the docker build command; e.g., --no-cache
 echo "Building Docker image..." \
-    && docker build --no-cache \
+    && docker build \
     --build-arg LICENSE_FILE=$LICENSE_FILE \
     --build-arg USER=$USER \
     --tag=command-freesurfer $@ $DIR \

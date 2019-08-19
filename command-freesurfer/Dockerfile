@@ -1,5 +1,5 @@
-# Use Ubuntu 18.04 as the base system
-FROM ubuntu:18.04
+# Use Ubuntu 19.04 as the base system
+FROM ubuntu:19.04
 
 # Install FreeSurfer
 COPY --from=freesurfer/freesurfer:6.0 /opt/freesurfer/ /usr/local/freesurfer/
@@ -20,6 +20,7 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y \
     python3-pyside \
     python3-pyqt5 \
     python3-pyqt4 \
+    python-pip \
     python-ipython \
     python-pyside \
     python-pyqt5 \
@@ -55,30 +56,6 @@ source $FREESURFER_HOME/SetUpFreeSurfer.sh\n' >> .bashrc
 
 # Use the X Window System display on the Docker host
 ENV DISPLAY=host.docker.internal:0
-
-# Install Anaconda
-RUN curl -sSL -O "https://repo.anaconda.com/archive/Anaconda2-2019.03-Linux-x86_64.sh" \
-    && bash Anaconda2-2019.03-Linux-x86_64.sh -b -p /home/$USER/anaconda2 \
-    && rm Anaconda2-2019.03-Linux-x86_64.sh
-RUN /home/$USER/anaconda2/condabin/conda init \
-    && /home/$USER/anaconda2/condabin/conda update -y -n base -c defaults conda
-
-# Install packages in the Anaconda Python 2.7 environment
-# (it already comes with numpy, scipy, matplotlib, ipython, etc.)
-RUN /home/$USER/anaconda2/condabin/conda install -y \
-    pyqt=4 \
-    pyside \
-    vtk \
-    mayavi \
-    six \
-    boto3 \
-    traitsui
-RUN /home/$USER/anaconda2/condabin/conda install -y --channel conda-forge \
-    nipype \
-    pysurfer
-
-# Create Python 3 environment
-RUN /home/$USER/anaconda2/condabin/conda create -y -n py3 python=3.7
 
 # Default command on docker run
 CMD ["/bin/bash", "--login"]
